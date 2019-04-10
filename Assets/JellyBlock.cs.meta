@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7e9df1190781e43418ca9af5657e286d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - smallCube: {fileID: 1030473307121834332, guid: fd17d0c0b7fcf43e28bff971ae7eb5cc,
+      type: 3}
+  - material: {fileID: 2100000, guid: 81aae0456d4b8477e8cdd42656e79be7, type: 2}
+  - bouncy: {fileID: 6200000, guid: a124af8fec6ce4ca8a88a26a2e4268e1, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

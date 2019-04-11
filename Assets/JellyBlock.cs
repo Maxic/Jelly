@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 using UnityEngine;
 
 public class JellyBlock : MonoBehaviour
 {
+	List<GameObject> cubes = new List<GameObject>();
+
 	public GameObject smallCube;
     public int cubeSize;
 
@@ -15,31 +18,41 @@ public class JellyBlock : MonoBehaviour
         UnityEditor.SceneView.FocusWindowIfItsOpen(typeof(UnityEditor.SceneView));
         #endif
 
-        var cubes = new Dictionary<Vector3, GameObject>();
-        Vector3 coordinates;
-        GameObject originCube;
+        for(var x=0; x < 6; x += 1){
+        	for(var y=0; y < 6; y += 1){
+        		for(var z=0; z < 6; z += 1){
+                    GameObject cube = Instantiate(smallCube, new Vector3(x*.1f,y*.1f,z*.1f), new Quaternion(1,1,1,1)) as GameObject;
+										Coordinates coordinates = cube.GetComponent<Coordinates>();
+										coordinates.X = x;
+										coordinates.Y = y;
+										coordinates.Z = z;
 
-        for(float x=0; x < .6f; x += .1f){
-        	for(float y=0; y < .6f; y += .1f){
-        		for(float z=0; z < .6f; z += .1f){
-                    coordinates = new Vector3(x,y,z);
-                    GameObject cube = Instantiate(smallCube, coordinates, new Quaternion(1,1,1,1)) as GameObject;
-                    cubes.Add(coordinates, cube);
+                    cubes.Add(cube);
 
                     if (cubes.Count > 1){
-                        FixedJoint fixedJoint = cube.AddComponent<FixedJoint>();
-                        cubes.TryGetValue(new Vector3(0,0,0), out originCube);
-                        // remove this and connect to neighbours
-                        fixedJoint.connectedBody = originCube.GetComponent<Rigidbody>();
+											AddJoint(cube, x-1, y, z);
+											AddJoint(cube, x+1, y, z);
+											AddJoint(cube, x, y-1, z);
+											AddJoint(cube, x, y+1, z);
+											AddJoint(cube, x, y, z-1);
+                      AddJoint(cube, x, y, z+1);
                     }
         		}
         	}
-        }         
+        }
     }
+
+		void AddJoint(GameObject cube, int x, int y, int z) {
+			var originCube = cubes.FirstOrDefault(c => c.GetComponent<Coordinates>().X == x && c.GetComponent<Coordinates>().Y == y && c.GetComponent<Coordinates>().Z == z);
+			if(originCube != null){
+				FixedJoint fixedJoint = cube.AddComponent<FixedJoint>();
+				fixedJoint.connectedBody = originCube.GetComponent<Rigidbody>();
+			}
+		}
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

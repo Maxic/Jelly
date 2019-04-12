@@ -9,8 +9,7 @@ public class JellyBlock : MonoBehaviour
 	List<GameObject> cubes = new List<GameObject>();
 
 	public GameObject smallCube;
-    public int cubeSize;
-
+    
     // Start is called before the first frame update
     void Start()
     {

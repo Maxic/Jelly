@@ -6,10 +6,10 @@ using UnityEngine;
 
 public class JellyBlock : MonoBehaviour
 {
-	List<GameObject> cubes = new List<GameObject>();
 
-	public GameObject smallCube;
-    public int cubeSize;
+    List<GameObject> cubes = new List<GameObject>();
+    public GameObject smallCube;
+    private float cubeSize;
 
     // Start is called before the first frame update
     void Start()
@@ -18,10 +18,14 @@ public class JellyBlock : MonoBehaviour
         UnityEditor.SceneView.FocusWindowIfItsOpen(typeof(UnityEditor.SceneView));
         #endif
 
+        cubeSize = smallCube.transform.localScale.x;
+
         for(var x=0; x < 6; x += 1){
         	for(var y=0; y < 6; y += 1){
         		for(var z=0; z < 6; z += 1){
-              GameObject cube = Instantiate(smallCube, new Vector3(x*.1f,y*.1f,z*.1f), new Quaternion(1,1,1,1)) as GameObject;
+              GameObject cube = Instantiate(smallCube, new Vector3(x*cubeSize,y*cubeSize,z*cubeSize), new Quaternion(1,1,1,1)) as GameObject;
+              cube.transform.parent = gameObject.transform;
+
 							Coordinates coordinates = cube.GetComponent<Coordinates>();
 							coordinates.X = x;
 							coordinates.Y = y;
@@ -45,15 +49,8 @@ public class JellyBlock : MonoBehaviour
 		void AddJoint(GameObject cube, int x, int y, int z) {
 			var originCube = cubes.FirstOrDefault(c => c.GetComponent<Coordinates>().X == x && c.GetComponent<Coordinates>().Y == y && c.GetComponent<Coordinates>().Z == z);
 			if(originCube != null){
-				SpringJoint springJoint = cube.AddComponent<SpringJoint>();
-			  springJoint.connectedBody = originCube.GetComponent<Rigidbody>();
-				//springJoint.damper = 0.3f;
-				springJoint.spring = 1000;
-				springJoint.tolerance = 0;
-				//springJoint.maxDistance = 0.5f;
-				springJoint.minDistance = 0.01f;
-
-
+				FixedJoint joint = cube.AddComponent<FixedJoint>();
+			  joint.connectedBody = originCube.GetComponent<Rigidbody>();				
 			}
 		}
 

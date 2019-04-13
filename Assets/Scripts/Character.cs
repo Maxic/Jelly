@@ -4,16 +4,18 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    Rigidbody m_Rigidbody;
-    public float m_Speed;
+    Rigidbody rigidbody;
+    public float speed;
+    public float jumpHeight;
     
 
      void Start()
     {
         //Fetch the Rigidbody component you attach from your GameObject
-        m_Rigidbody = GetComponent<Rigidbody>();
+        rigidbody = GetComponent<Rigidbody>();
         //Set the speed of the GameObject
-        m_Speed = 15f;
+        speed = 15f;
+        jumpHeight = 1000f;
     }
 
     void Update()
@@ -21,26 +23,34 @@ public class Character : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow))
         {
             //Move the Rigidbody forwards constantly at speed you define (the blue arrow axis in Scene view)
-            m_Rigidbody.velocity = Vector3.forward * m_Speed;
+            rigidbody.velocity = Vector3.forward * speed;
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
             //Move the Rigidbody backwards constantly at the speed you define (the blue arrow axis in Scene view)
-            m_Rigidbody.velocity = -Vector3.forward * m_Speed;
+            rigidbody.velocity = -Vector3.forward * speed;
         }
 
         if (Input.GetKey(KeyCode.RightArrow))
         {
             //Move the Rigidbody forwards constantly at speed you define (the blue arrow axis in Scene view)
-            m_Rigidbody.velocity = new Vector3(1,0,0) * m_Speed;
+            rigidbody.velocity = new Vector3(1,0,0) * speed;
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             //Move the Rigidbody backwards constantly at the speed you define (the blue arrow axis in Scene view)
-            m_Rigidbody.velocity = new Vector3(1,0,0) * m_Speed * -1;
+            rigidbody.velocity = new Vector3(-1,0,0) * speed;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded()){
+            rigidbody.velocity = new Vector3(0,1,0) * jumpHeight;
         }
     }
 
+    bool IsGrounded(){
+        Debug.Log(Physics.Raycast(transform.position, -Vector3.up, .1f));
+        return Physics.Raycast(transform.position, -Vector3.up, .1f);
+    }
 }

@@ -24,6 +24,7 @@ public class JellyBlock : MonoBehaviour
       	for(var y=0; y < 5; y += 1){
       		for(var z=0; z < 5; z += 1){
             GameObject cube = Instantiate(smallCube, new Vector3(x*cubeSize,y*cubeSize,z*cubeSize), new Quaternion(1,1,1,1)) as GameObject;
+            cube.layer = 2;
             cube.transform.parent = gameObject.transform;
 
 						Coordinates coordinates = cube.GetComponent<Coordinates>();

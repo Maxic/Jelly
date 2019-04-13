@@ -25,32 +25,27 @@ public class Character : MonoBehaviour
             //Move the Rigidbody forwards constantly at speed you define (the blue arrow axis in Scene view)
             rigidbody.velocity = Vector3.forward * speed;
         }
-
         if (Input.GetKey(KeyCode.DownArrow))
         {
             //Move the Rigidbody backwards constantly at the speed you define (the blue arrow axis in Scene view)
             rigidbody.velocity = -Vector3.forward * speed;
         }
-
         if (Input.GetKey(KeyCode.RightArrow))
         {
             //Move the Rigidbody forwards constantly at speed you define (the blue arrow axis in Scene view)
             rigidbody.velocity = new Vector3(1,0,0) * speed;
         }
-
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             //Move the Rigidbody backwards constantly at the speed you define (the blue arrow axis in Scene view)
             rigidbody.velocity = new Vector3(-1,0,0) * speed;
         }
-
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded()){
             rigidbody.velocity = new Vector3(0,1,0) * jumpHeight;
         }
     }
 
     bool IsGrounded(){
-        Debug.Log(Physics.Raycast(transform.position, -Vector3.up, .1f));
-        return Physics.Raycast(transform.position, -Vector3.up, .1f);
+        return Physics.Raycast(transform.position, -Vector3.up, .4f);
     }
 }

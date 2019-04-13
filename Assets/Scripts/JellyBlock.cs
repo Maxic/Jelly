@@ -20,9 +20,9 @@ public class JellyBlock : MonoBehaviour
 
       cubeSize = smallCube.transform.localScale.x;
 
-      for(var x=0; x < 7; x += 1){
-      	for(var y=0; y < 7; y += 1){
-      		for(var z=0; z < 7; z += 1){
+      for(var x=0; x < 5; x += 1){
+      	for(var y=0; y < 5; y += 1){
+      		for(var z=0; z < 5; z += 1){
             GameObject cube = Instantiate(smallCube, new Vector3(x*cubeSize,y*cubeSize,z*cubeSize), new Quaternion(1,1,1,1)) as GameObject;
             cube.transform.parent = gameObject.transform;
 
@@ -44,7 +44,7 @@ public class JellyBlock : MonoBehaviour
       		}
       	}
       }
-      var middleCube = cubes.FirstOrDefault(c => c.GetComponent<Coordinates>().X == 3 && c.GetComponent<Coordinates>().Y == 3 && c.GetComponent<Coordinates>().Z == 3);
+      var middleCube = cubes.FirstOrDefault(c => c.GetComponent<Coordinates>().X == 2 && c.GetComponent<Coordinates>().Y == 2 && c.GetComponent<Coordinates>().Z == 2);
       var script = middleCube.AddComponent<Character>();
     }
 

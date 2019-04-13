@@ -97,8 +97,8 @@ MonoBehaviour:
   CannonBall: {fileID: 5816705882787634004, guid: 203d625e71a583949b54a36c36f564b7,
     type: 3}
   shotPos: {fileID: 0}
-  explosion: {fileID: 0}
   firePower: 0
+  powerMultiplier: 0
 --- !u!65 &4211631627504951470
 BoxCollider:
   m_ObjectHideFlags: 0

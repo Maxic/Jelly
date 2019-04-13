@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tracking : MonoBehaviour
 {
     public float speed = 3.0f;
-    GameObject myTarget = null;
+    public GameObject myTarget = null;
     Vector3 myTargetLastKnownPosition = Vector3.zero;
     Quaternion myTargetLookAtRotation;
 
@@ -18,11 +18,21 @@ public class Tracking : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (myTargetLastKnownPosition != myTarget.transform.position)
+        if (myTarget)
         {
-            myTargetLastKnownPosition = myTarget.transform.position;
-            myTargetLookAtRotation = Quaternion.LookRotation(myTargetLastKnownPosition = transform.position);
+            if (myTargetLastKnownPosition != myTarget.transform.position)
+            {
+                myTargetLastKnownPosition = myTarget.transform.position;
+                myTargetLookAtRotation = Quaternion.LookRotation(myTargetLastKnownPosition - transform.position);
+            }
 
+
+            if (transform.rotation != myTargetLookAtRotation)
+            {
+
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, myTargetLookAtRotation, speed * Time.deltaTime);
+
+            }
         }
     }
         bool SetTarget(GameObject target)

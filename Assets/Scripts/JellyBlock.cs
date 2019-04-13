@@ -52,7 +52,8 @@ public class JellyBlock : MonoBehaviour
 			var neighbourCube = cubes.FirstOrDefault(c => c.GetComponent<Coordinates>().X == x && c.GetComponent<Coordinates>().Y == y && c.GetComponent<Coordinates>().Z == z);
 			if(neighbourCube != null){
 				FixedJoint joint = cube.AddComponent<FixedJoint>();
-			  joint.connectedBody = neighbourCube.GetComponent<Rigidbody>();				
+                joint.breakForce = 1000;
+			    joint.connectedBody = neighbourCube.GetComponent<Rigidbody>();				
 			}
 		}
 

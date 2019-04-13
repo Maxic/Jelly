@@ -24,8 +24,6 @@ public class Tracking : MonoBehaviour
             myTargetLookAtRotation = Quaternion.LookRotation(myTargetLastKnownPosition = transform.position);
 
         }
-
-        if(transforms
     }
         bool SetTarget(GameObject target)
         {

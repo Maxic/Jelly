@@ -6,53 +6,53 @@ using UnityEngine;
 
 public class JellyBlock : MonoBehaviour
 {
+	List<GameObject> cubes = new List<GameObject>();
 
-    List<GameObject> cubes = new List<GameObject>();
-    public GameObject smallCube;
-    private float cubeSize;
-
+	public GameObject smallCube;
+    
     // Start is called before the first frame update
     void Start()
     {
-      #if UNITY_EDITOR
-      UnityEditor.SceneView.FocusWindowIfItsOpen(typeof(UnityEditor.SceneView));
-      #endif
+        #if UNITY_EDITOR
+        UnityEditor.SceneView.FocusWindowIfItsOpen(typeof(UnityEditor.SceneView));
+        #endif
 
-      cubeSize = smallCube.transform.localScale.x;
+        for(var x=0; x < 6; x += 1){
+        	for(var y=0; y < 6; y += 1){
+        		for(var z=0; z < 6; z += 1){
+              GameObject cube = Instantiate(smallCube, new Vector3(x*.1f,y*.1f,z*.1f), new Quaternion(1,1,1,1)) as GameObject;
+							Coordinates coordinates = cube.GetComponent<Coordinates>();
+							coordinates.X = x;
+							coordinates.Y = y;
+							coordinates.Z = z;
 
-      for(var x=0; x < 7; x += 1){
-      	for(var y=0; y < 7; y += 1){
-      		for(var z=0; z < 7; z += 1){
-            GameObject cube = Instantiate(smallCube, new Vector3(x*cubeSize,y*cubeSize,z*cubeSize), new Quaternion(1,1,1,1)) as GameObject;
-            cube.transform.parent = gameObject.transform;
+              cubes.Add(cube);
 
-						Coordinates coordinates = cube.GetComponent<Coordinates>();
-						coordinates.X = x;
-						coordinates.Y = y;
-						coordinates.Z = z;
-
-            cubes.Add(cube);
-
-            if (cubes.Count > 1){
-							AddJoint(cube, x-1, y, z);
-							AddJoint(cube, x+1, y, z);
-							AddJoint(cube, x, y-1, z);
-							AddJoint(cube, x, y+1, z);
-							AddJoint(cube, x, y, z-1);
-              AddJoint(cube, x, y, z+1);
-            }
-      		}
-      	}
-      }
-      var middleCube = cubes.FirstOrDefault(c => c.GetComponent<Coordinates>().X == 3 && c.GetComponent<Coordinates>().Y == 3 && c.GetComponent<Coordinates>().Z == 3);
-      var script = middleCube.AddComponent<Character>();
+              if (cubes.Count > 1){
+								AddJoint(cube, x-1, y, z);
+								AddJoint(cube, x+1, y, z);
+								AddJoint(cube, x, y-1, z);
+								AddJoint(cube, x, y+1, z);
+								AddJoint(cube, x, y, z-1);
+                AddJoint(cube, x, y, z+1);
+              }
+        		}
+        	}
+        }
     }
 
 		void AddJoint(GameObject cube, int x, int y, int z) {
-			var neighbourCube = cubes.FirstOrDefault(c => c.GetComponent<Coordinates>().X == x && c.GetComponent<Coordinates>().Y == y && c.GetComponent<Coordinates>().Z == z);
-			if(neighbourCube != null){
-				FixedJoint joint = cube.AddComponent<FixedJoint>();
-			  joint.connectedBody = neighbourCube.GetComponent<Rigidbody>();				
+			var originCube = cubes.FirstOrDefault(c => c.GetComponent<Coordinates>().X == x && c.GetComponent<Coordinates>().Y == y && c.GetComponent<Coordinates>().Z == z);
+			if(originCube != null){
+				SpringJoint springJoint = cube.AddComponent<SpringJoint>();
+			  springJoint.connectedBody = originCube.GetComponent<Rigidbody>();
+				//springJoint.damper = 0.3f;
+				springJoint.spring = 1000;
+				springJoint.tolerance = 0;
+				//springJoint.maxDistance = 0.5f;
+				springJoint.minDistance = 0.01f;
+
+
 			}
 		}
 

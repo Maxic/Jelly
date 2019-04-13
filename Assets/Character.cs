@@ -21,13 +21,13 @@ public class Character : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow))
         {
             //Move the Rigidbody forwards constantly at speed you define (the blue arrow axis in Scene view)
-            m_Rigidbody.velocity = transform.forward * m_Speed;
+            m_Rigidbody.velocity = Vector3.forward * m_Speed;
         }
 
         if (Input.GetKey(KeyCode.DownArrow))
         {
             //Move the Rigidbody backwards constantly at the speed you define (the blue arrow axis in Scene view)
-            m_Rigidbody.velocity = -transform.forward * m_Speed;
+            m_Rigidbody.velocity = -Vector3.forward * m_Speed;
         }
     }
 

@@ -29,6 +29,18 @@ public class Character : MonoBehaviour
             //Move the Rigidbody backwards constantly at the speed you define (the blue arrow axis in Scene view)
             m_Rigidbody.velocity = -Vector3.forward * m_Speed;
         }
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            //Move the Rigidbody forwards constantly at speed you define (the blue arrow axis in Scene view)
+            m_Rigidbody.velocity = new Vector3(1,0,0) * m_Speed;
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            //Move the Rigidbody backwards constantly at the speed you define (the blue arrow axis in Scene view)
+            m_Rigidbody.velocity = new Vector3(1,0,0) * m_Speed * -1;
+        }
     }
 
 }

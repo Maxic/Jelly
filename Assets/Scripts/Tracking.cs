@@ -9,9 +9,19 @@ public class Tracking : MonoBehaviour
     Vector3 myTargetLastKnownPosition = Vector3.zero;
     Quaternion myTargetLookAtRotation;
 
+    /// <summary>
+    /// Start is called on the frame when a script is enabled just before
+    /// any of the Update methods is called the first time.
+    /// </summary>
+    void Start()
+    {
+        myTarget = GameObject.FindWithTag("Player");
+    }
+
     // Update is called once per frame
     void Update()
     {
+
         if (myTarget)
         {
             if (myTargetLastKnownPosition != myTarget.transform.position)

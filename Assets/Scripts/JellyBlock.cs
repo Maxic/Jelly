@@ -47,6 +47,8 @@ public class JellyBlock : MonoBehaviour
       }
       var middleCube = cubes.FirstOrDefault(c => c.GetComponent<Coordinates>().X == 2 && c.GetComponent<Coordinates>().Y == 2 && c.GetComponent<Coordinates>().Z == 2);
       var script = middleCube.AddComponent<Character>();
+      middleCube.name = "Player";
+      middleCube.tag = "Player"; 
     }
 
 		void AddJoint(GameObject cube, int x, int y, int z) {

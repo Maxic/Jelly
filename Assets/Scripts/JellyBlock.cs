@@ -32,6 +32,12 @@ public class JellyBlock : MonoBehaviour
 						coordinates.Y = y;
 						coordinates.Z = z;
 
+            if( x % 2 > 0 || y % 2 > 0 || z % 2 > 0){
+              BoxCollider boxCollider = cube.GetComponent<BoxCollider>();
+              boxCollider.size = new Vector3(.5f,.5f,.5f);
+              Debug.Log(boxCollider.size);
+            }
+
             cubes.Add(cube);
 
             if (cubes.Count > 1){

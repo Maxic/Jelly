@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6038612341941790197}
   - component: {fileID: 2692381784460476479}
   - component: {fileID: 8547954478411465601}
+  - component: {fileID: 3071853136051247011}
   m_Layer: 0
   m_Name: smallCube
   m_TagString: Untagged
@@ -122,5 +123,17 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 0.8, y: 0.8, z: 0.8}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3071853136051247011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1030473307121834332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f71d81b09de44401966dcf775a5948a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -14,8 +14,8 @@ public class Character : MonoBehaviour
         //Fetch the Rigidbody component you attach from your GameObject
         rigidbody = GetComponent<Rigidbody>();
         //Set the speed of the GameObject
-        speed = 15f;
-        jumpHeight = 1000f;
+        speed = 6f;
+        jumpHeight = 500f;
     }
 
     void Update()

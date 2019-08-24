@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class HappyCube : MonoBehaviour
 {
-    public float upDownFactor;
+    public float jellyFactor;
     public float upDownSpeed = 6f;
     protected MeshFilter meshFilter;
     protected Mesh mesh;
     protected MeshCollider meshCollider;
+    protected Vector3[] cubeState;
 
     // Start is called before the first frame update
     void Start()
     {
-        upDownFactor = 0.05f;
+        jellyFactor = 0.08f;
 
         mesh = new Mesh();
         mesh.name = "GeneratedMesh";
-
-        mesh.vertices = GeneratedVertices(new Vector3(0,0,0));
+        cubeState = GenerateInitialState();
+        mesh.vertices = GeneratedVertices(cubeState, new Vector3(0,0,0));
         mesh.triangles = GeneratedTriangles();
 
         mesh.RecalculateNormals();
@@ -33,53 +34,81 @@ public class HappyCube : MonoBehaviour
         
     }
 
-    private Vector3[] GeneratedVertices(Vector3 velocity){
-        float left = velocity.x;
-        float right = (velocity.x * -1);
-
-        float up = velocity.y * upDownFactor;
-        float down = (velocity.y * -1) * upDownFactor;
-        
-        Debug.Log("UpDownFactor: " + upDownFactor);
-        Debug.Log("VelocityUp: " + velocity.y);
-        Debug.Log("Up: " + up);
-        Debug.Log("Should be up: " + (velocity.y * upDownFactor));
-        Debug.Log("VelocityDown: " + velocity.y *-1);
-        Debug.Log("down: " + down);
-
-        float back = velocity.z;
-        float forward = velocity.z * -1;
+    private Vector3[] GenerateInitialState(){
         return new Vector3[]{
             // Bottom
-            new Vector3(-1,0 + down,1),
-            new Vector3(1,0 + down,1),
-            new Vector3(1,0 + down,-1),
-            new Vector3(-1,0 + down,-1),
+            new Vector3(-1,0 ,1),
+            new Vector3(1,0 ,1),
+            new Vector3(1,0 ,-1),
+            new Vector3(-1,0 ,-1),
             // Top
-            new Vector3(-1,2 + up,1),
-            new Vector3(1,2 + up,1),
-            new Vector3(1,2 + up,-1),
-            new Vector3(-1,2 + up,-1),
+            new Vector3(-1,2 ,1),
+            new Vector3(1,2 ,1),
+            new Vector3(1,2 ,-1),
+            new Vector3(-1,2 ,-1),
             // Left
-            new Vector3(-1,0 + down,1),
-            new Vector3(-1,0 + down,-1),
-            new Vector3(-1,2 + up,1),
-            new Vector3(-1,2 + up,-1),
+            new Vector3(-1,0 ,1),
+            new Vector3(-1,0 ,-1),
+            new Vector3(-1,2 ,1),
+            new Vector3(-1,2 ,-1),
             // Right
-            new Vector3(1,0 + down,1),
-            new Vector3(1,0 + down,-1),
-            new Vector3(1,2 + up,1),
-            new Vector3(1,2 + up,-1),
+            new Vector3(1,0 ,1),
+            new Vector3(1,0 ,-1),
+            new Vector3(1,2 ,1),
+            new Vector3(1,2 ,-1),
             // Front
-            new Vector3(1,0 + down,-1),
-            new Vector3(-1,0 + down,-1),
-            new Vector3(1,2 + up,-1),
-            new Vector3(-1,2 + up,-1),
+            new Vector3(1,0 ,-1),
+            new Vector3(-1,0 ,-1),
+            new Vector3(1,2 ,-1),
+            new Vector3(-1,2 ,-1),
             // Back
-            new Vector3(-1,0 + down,1),
-            new Vector3(1,0 + down,1),
-            new Vector3(-1,2 + up,1),
-            new Vector3(1,2 + up,1),
+            new Vector3(-1,0 ,1),
+            new Vector3(1,0 ,1),
+            new Vector3(-1,2 ,1),
+            new Vector3(1,2 ,1),
+        };
+    }
+
+    private Vector3[] GeneratedVertices(Vector3[] cubeState, Vector3 velocity){
+        float left = velocity.x * jellyFactor;
+        float right = (velocity.x * -1) * jellyFactor;
+
+        float up = velocity.y * jellyFactor;
+        float down = (velocity.y * -1) * jellyFactor;
+
+        float back = velocity.z * jellyFactor;
+        float forward = (velocity.z * -1) * jellyFactor;
+        return new Vector3[]{
+            // Bottom
+            new Vector3(-1 + left,0 + down,1 + forward),
+            new Vector3(1 + right,0 + down,1 + forward),
+            new Vector3(1 + right,0 + down,-1 + back),
+            new Vector3(-1 + left,0 + down,-1 + back),
+            // Top
+            new Vector3(-1 + left,2 + up,1 + forward),
+            new Vector3(1 + right,2 + up,1 + forward),
+            new Vector3(1 + right,2 + up,-1 + back),
+            new Vector3(-1 + left,2 + up,-1 + back),
+            // Left
+            new Vector3(-1 + left,0 + down,1 + forward),
+            new Vector3(-1 + left,0 + down,-1 + back),
+            new Vector3(-1 + left,2 + up,1 + forward),
+            new Vector3(-1 + left,2 + up,-1 + back),
+            // Right
+            new Vector3(1 + right,0 + down,1 + forward),
+            new Vector3(1 + right,0 + down,-1 + back),
+            new Vector3(1 + right,2 + up,1 + forward),
+            new Vector3(1 + right,2 + up,-1 + back),
+            // Front
+            new Vector3(1 + right,0 + down,-1 + back),
+            new Vector3(-1 + left,0 + down,-1 + back),
+            new Vector3(1 + right,2 + up,-1 + back),
+            new Vector3(-1 + left,2 + up,-1 + back),
+            // Back
+            new Vector3(-1 + left,0 + down,1 + forward),
+            new Vector3(1 + right,0 + down,1 + forward),
+            new Vector3(-1 + left,2 + up,1 + forward),
+            new Vector3(1 + right,2 + up,1 + forward),
         };
     }
 
@@ -111,7 +140,8 @@ public class HappyCube : MonoBehaviour
     void Update()
     {
         var velocity = gameObject.GetComponent<Rigidbody>().velocity;
-        mesh.vertices =  GeneratedVertices(velocity);
+        cubeState = GeneratedVertices(cubeState, velocity);
+        mesh.vertices = cubeState;
         meshCollider.sharedMesh = mesh;
         //var velocity = gameObject.GetComponent<Rigidbody>().velocity;
         //Debug.Log(velocity);
